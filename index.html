@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub API Autocomplete</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-container">
+        <input class="input" type="text">
+
+        <div class="repo-added-wrapper">
+            <template id="repo-template">
+                <div class="info-wrapper">
+                    <p>Name: <span class="info-name"></span></p>
+                    <p>Owner: <span class="info-owner"></span></p>
+                    <p>Stars: <span class="info-stars"></span></p>
+                </div>
+
+                <button class="delete-button">
+                    <span class="delete-button__element1"></span>
+                    <span class="delete-button__element2"></span>
+                </button>
+            </template>
+        </div>
+    </div>
+</body>
+</html>
