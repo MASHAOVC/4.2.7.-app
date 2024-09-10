@@ -6,23 +6,25 @@ body {
     width: 661px;
     height: 763px;
     background-color: #C4C4C4;
+    padding: 62px 84px 72px 74px;
+    box-sizing: border-box;
 }
 
 .input {
     width: 500px;
     height: 61px;
-    margin: 62px 72px 0 74px; 
     font-size: 48px;
     padding-left: 13px;
     padding-top: 5px;
     border-width: 0;
+    box-sizing: border-box;
 }
 
 .repo-added-wrapper {
     display: flex;
-    width: 513px;
+    width: 503px;
     height: 101px;
-    margin: 45px 72px 0 74px;
+    margin-top: 45px;
     padding: 8px 16px; 
     background-color: #E27BEB;
     gap: 350px;
@@ -32,21 +34,26 @@ body {
 .delete-button {
     background: none;
     border: none;
+    width: 42px;
+    height: 38.5px;
+    padding: 0;
+    contain: content;
+    align-self: center;
 }
 
 .delete-button__element1 {
-    width: 50px;
+    width: 42px;
     min-height: 5px;
     background-color: #FF0000;
-    transform:  translate(1px, -1px) rotate(-45deg);
+    transform:  translate(1px, 1px) rotate(-45deg);
 }
 
 
 .delete-button__element2 {
-    width: 50px;
+    width: 42px;
     min-height: 5px;
     background-color: #FF0000;
-    transform: translate(2px, -5px) rotate(45deg);
+    transform: translate(2px, -4px) rotate(45deg);
 }
 
 p {
@@ -64,4 +71,24 @@ p {
     font-family: 'Roboto';
     font-weight: 400;
     src: url(statics/Roboto-Regular.ttf), format('truetype');
+}
+
+.repo-wrapper {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.repo-item {
+    width: 500px;
+    height: 44px;
+    background-color: #E3E3E3;
+    border: 2px solid #000000;
+    padding-left: 13px;
+    padding-bottom: 9px;
+    box-sizing: border-box;
+}
+
+.repo-item:hover {
+    background-color: #65CDF9;
 }
