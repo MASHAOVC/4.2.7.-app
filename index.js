@@ -1,7 +1,7 @@
 let input = document.querySelector('.input');
 let fetchedResult;
 
-input.addEventListener('keyup', async function (event) {
+input.addEventListener('keyup', debounce(async function (event) {
     let repoItem;
     let repoWrapper = document.querySelector('.repo-wrapper');
 
@@ -11,10 +11,8 @@ input.addEventListener('keyup', async function (event) {
     }
 
     try {
-        const debouncedFetch = debounce(loadRepositories, 500);
-        debouncedFetch(event.target.value)
-        // fetchedResult = await loadRepositories(event.target.value);
-        // console.log(fetchedResult);
+        fetchedResult = await loadRepositories(event.target.value);
+        console.log(fetchedResult);
     } catch(err) {
         alert('Что-то пошло не так: ' + err.message);
     };
@@ -34,7 +32,8 @@ input.addEventListener('keyup', async function (event) {
             count++ 
         }     
     };
-});
+}, 600));
+
 
 function debounce (fn, debounceTime) {
     let timeoutId;
@@ -48,14 +47,34 @@ function debounce (fn, debounceTime) {
     };
 };
 
+let repoWrapper = document.querySelector('.repo-wrapper');
+
+repoWrapper.addEventListener('click', function (event) {
+    let repoName = event.target.textContent;
+    let contentDiv = document.querySelector('.repo-container');
+
+    let repoTemplate = document.getElementById('repo-template').content;
+    let templateName = repoTemplate.querySelector('.info-name');
+    let templateOwner = repoTemplate.querySelector('.info-owner');
+    let templateStars = repoTemplate.querySelector('.info-stars');
+
+    let repo = fetchedResult.find((repo) => repo.name === repoName);
+
+    templateName.textContent = repoName; 
+    templateOwner.textContent = repo.owner.login;
+    templateStars.textContent = repo.stargazers_count;
+
+    let clone = repoTemplate.cloneNode(true);
+
+    contentDiv.append(clone);
+})
+
 
 async function loadRepositories(search) {
-    fetchedResult = await fetch(`https://api.github.com/search/repositories?q=${search}`).data;
-    return JSON.parse(fetchedResult).items;
+    // fetchedResult = await fetch(`https://api.github.com/search/repositories?q=${search}`);
+    // return fetchedResult;
 
-    // await new Promise((res) => setTimeout(res, 400))
-
-    //     return getMockResult().items;
+        return getMockResult().items;
 }
 
 
