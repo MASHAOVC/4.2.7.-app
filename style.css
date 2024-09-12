@@ -1,13 +1,16 @@
 body {
+    margin: 0;
     font-family: 'Roboto', sans-serif;
+    background-color: #f7f8f8 ;
 }
 
 .main-container {
     width: 661px;
-    height: 763px;
+    min-height: 763px;
     background-color: #C4C4C4;
     padding: 62px 84px 72px 74px;
     box-sizing: border-box;
+    margin-left: 430px;
 }
 
 .input {
@@ -24,7 +27,6 @@ body {
     display: flex;
     width: 503px;
     height: 101px;
-    /* margin-top: 45px; */
     padding: 8px 16px; 
     background-color: #E27BEB;
     justify-content: space-between;

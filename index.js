@@ -1,6 +1,7 @@
 let input = document.querySelector(".input");
 let fetchedResult;
 
+
 input.addEventListener("keyup", debounce(async function (event) {
     let repoItem;
     let repoWrapper = document.querySelector(".repo-wrapper");
@@ -11,52 +12,45 @@ input.addEventListener("keyup", debounce(async function (event) {
     }
 
     try {
-      let response = await fetch(`https://api.github.com/search/repositories?q=${event.target.value}`);
 
-      if (response.ok) {
-        let result = await response.json();
-        fetchedResult = result.items;
-      };
-    } catch (err) {
-      alert("Что-то пошло не так: " + err.message);
-    }
+        if(event.target.value.trim()) {
+            let response = await fetch(`https://api.github.com/search/repositories?q=${event.target.value}`);
+            
+            if (response.ok) {
+                let result = await response.json();
+                fetchedResult = result.items;
+              }
+        
+        } else {
+            return;
+        }
+
+    } catch (error) {
+      alert("Что-то пошло не так: " + error.message);
+    };
 
     repoWrapper.innerHTML = "";
 
     let count = 0;
     for (let repo of fetchedResult) {
       if (count < 5) {
-        console.log(repo.name);
         repoItem = document.createElement("li");
         repoItem.classList.add("repo-item");
         repoItem.textContent = repo.name;
         repoWrapper.append(repoItem);
-        console.log(repoItem);
 
         count++;
       }
-    }
+    };
   }, 600)
 );
 
-function debounce(fn, debounceTime) {
-  let timeoutId;
-
-  return function (...args) {
-    clearTimeout(timeoutId);
-
-    timeoutId = setTimeout(() => {
-      fn.apply(this, args);
-    }, debounceTime);
-  };
-}
-
-let repoWrapper = document.querySelector(".repo-wrapper");
-let clone;
-let contentDiv = document.querySelector(".repo-container");
 
 function cloneReady() {
   return new Promise((resolve) => {
+
+    let repoWrapper = document.querySelector(".repo-wrapper");
+
     repoWrapper.addEventListener("click", function (event) {
       let repoName = event.target.textContent;
 
@@ -71,7 +65,8 @@ function cloneReady() {
       templateOwner.textContent = repo.owner.login;
       templateStars.textContent = repo.stargazers_count;
 
-      clone = repoTemplate.cloneNode(true);
+      let clone = repoTemplate.cloneNode(true);
+      let contentDiv = document.querySelector(".repo-container");
       contentDiv.append(clone);
 
       input.value = "";
@@ -80,17 +75,32 @@ function cloneReady() {
       resolve(contentDiv);
     });
   });
-}
+};
 
-cloneReady().then((contentDiv) => {
+
+cloneReady()
+    .then((contentDiv) => {
     
     contentDiv.addEventListener('click', function (event) {
         let deleteButton = event.target.closest('.delete-button');
         let repoItem = event.target.closest('.repo-added-wrapper');
 
-        if (deleteButton) {
-            repoItem.remove();
-        }
-
+        if (deleteButton) repoItem.remove();
     });
-});
+})
+    .catch((error) => {
+        console.error('An error occurred:', error);
+    }); 
+
+    
+function debounce(fn, debounceTime) {
+    let timeoutId;
+  
+    return function (...args) {
+      clearTimeout(timeoutId);
+  
+      timeoutId = setTimeout(() => {
+        fn.apply(this, args);
+      }, debounceTime);
+    };
+  };
