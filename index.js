@@ -6,25 +6,19 @@ input.addEventListener("keyup", debounce(async function (event) {
     let repoItem;
     let repoWrapper = document.querySelector(".repo-wrapper");
 
-    if (event.target.value === "") {
+    if (event.target.value.trim() === "") {
       repoWrapper.innerHTML = "";
       return;
     }
 
     try {
-
-        if(event.target.value.trim()) {
-            let response = await fetch(`https://api.github.com/search/repositories?q=${event.target.value}`);
+        let response = await fetch(`https://api.github.com/search/repositories?q=${event.target.value}`);
             
-            if (response.ok) {
-                let result = await response.json();
-                fetchedResult = result.items;
-              }
-        
-        } else {
-            return;
+        if (response.ok) {
+            let result = await response.json();
+            fetchedResult = result.items;
         }
-
+        
     } catch (error) {
       alert("Что-то пошло не так: " + error.message);
     };
